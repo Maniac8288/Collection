@@ -1,7 +1,42 @@
-﻿@{
-    ViewBag.Title = "About";
-}
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+﻿@model IEnumerable<WebApplication7.Models.products>
 
-<p>Use this area to provide additional information.</p>
+@{
+    ViewBag.Title = "About";
+
+}
+<br />
+<h1 align="center"> Выберите что хотите купить</h1>
+<form  method="post">
+    <select name="Name" size="3" multiple>
+        <option value="Клавиатура" >Клавиатура</option>
+        <option value="Компьютерная мышь"> Компьютерная мышь </option>
+        <option value="Монитор">Монитор</option>
+        <option value="Наушники">Наушники</option>
+
+    </select> 
+    <br />
+    <p>Выберите цвет товара</p>
+    <input type="radio" name="color" value="Красный"/>Красный<br />
+    <input type="radio" name="color" value="Белый" />Белый<br />
+    <input type="radio" name="color" value="Синий" />Синий<br />
+    <input type="radio" name="color" value="Зеленый" />Зеленый<br />
+    <br />
+    <input type="submit" name="save" value="Купить"/>
+</form>
+<form action="/Home/Array" method="post">
+    <input id="names" name="names" type="text" value="" />
+    <input id="names" name="names" type="text" value="" />
+    <input id="names" name="names" type="text" value="" />
+    <input id="names" name="names" type="text" value="" />
+    <input type="submit" />
+</form>
+@foreach (var item in Model)
+{
+    <h1>Имя товара:@item.Name</h1>
+      
+       <h3> Цвет товара: @item.Color</h3>
+       <hr />
+}
+
+
+

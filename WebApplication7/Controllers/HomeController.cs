@@ -3,23 +3,41 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebApplication7.Models;
 
 namespace WebApplication7.Controllers
 {
     public class HomeController : Controller
     {
+
         public ActionResult Index()
         {
             return View();
         }
-
-        public ActionResult About()
+       
+        public ActionResult About(products test)
         {
-            ViewBag.Message = "Your application description page.";
+            List<products> products = new List<products>();
+           
+                products.Add(new Models.products()
+                {
+                    Name = Request.Form["Name"],
+                    Color = test.Color
+                });
+            return View(products);
 
-            return View();
         }
-
+        [HttpPost]
+        public string Array(List<string> names)
+        {
+            string fin = "";
+            for (int i = 0; i < names.Count; i++)
+            {
+                fin += names[i] + ";  ";
+            }
+            return fin;
+        }
+      
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";

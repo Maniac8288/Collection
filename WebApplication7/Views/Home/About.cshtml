@@ -8,7 +8,7 @@
 <h1 align="center"> Выберите что хотите купить</h1>
 <form  method="post">
 
-    <select name="Name" size="3" multiple>
+    <select name="Name" id="Name" size="3" multiple>
         <option value="Клавиатура" >Клавиатура</option>
         <option value="Компьютерная мышь"> Компьютерная мышь </option>
         <option value="Монитор">Монитор</option>
@@ -22,7 +22,8 @@
     <input type="radio" name="color" value="Синий" />Синий<br />
     <input type="radio" name="color" value="Зеленый" />Зеленый<br />
     <br />
-    <input type="submit" name="save" value="Купить"/>
+    <input type="submit" name="save1" value="Просмотр покупки"/>
+    <input type="button" id="save" value="Внести в корзину" />
 </form>
 <form action="/Home/Array" method="post">
     <input id="names" name="names" type="text" value="" />
@@ -38,6 +39,40 @@
        <h3> Цвет товара: @item.Color</h3>
        <hr />
 }
+<h1>Корзина</h1>
+<ul id="stickies">
 
-
+</ul>
+@section Scripts {
+   <script>
+       window.onload = init;
+       
+       function init() {
+           var button = document.getElementById("save");
+           button.onclick = createInfo;
+           for (var i = 0; i < sessionStorage.length; i++) {
+               var key = sessionStorage.key(i);
+               if (key.substring(0, 6) == "sticky") {
+                   var value = sessionStorage.getItem(key);
+                   addInfo(value);
+               }
+           }
+       }
+       function createInfo() {
+           var value = document.getElementById("Name").value;
+           var key = "sticky_" + sessionStorage.length;
+           sessionStorage.setItem(key, value);
+           addInfo(value)
+       }
+       function addInfo(value) {
+           var stickies = document.getElementById("stickies");
+           var sticky = document.createElement("li");
+           var span = document.createElement("span");
+           span.setAttribute("class", "sticky");
+           span.innerHTML = value;
+           sticky.appendChild(span);
+           stickies.appendChild(sticky);
+       }
+    </script>
+    }
 

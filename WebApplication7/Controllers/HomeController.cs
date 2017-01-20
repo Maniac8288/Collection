@@ -22,7 +22,7 @@ namespace WebApplication7.Controllers
                 products.Add(new Models.products()
                 {
                     Name = Request.Form["Name"],
-                    Color = test.Color
+                    Color = " "+test.Color
                 });
             return View(products);
 

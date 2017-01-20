@@ -1,12 +1,12 @@
 ﻿@model IEnumerable<WebApplication7.Models.products>
-
+@using WebApplication7.Controllers;
 @{
     ViewBag.Title = "About";
 
 }
 <br />
 <h1 align="center"> Выберите что хотите купить</h1>
-<form  method="post">
+<form  method="post" id="12">
 
     <select name="Name" id="Name" size="3" multiple>
         <option value="Клавиатура" >Клавиатура</option>
@@ -22,8 +22,8 @@
     <input type="radio" name="color" value="Синий" />Синий<br />
     <input type="radio" name="color" value="Зеленый" />Зеленый<br />
     <br />
-    <input type="submit" name="save1" value="Просмотр покупки"/>
-    <input type="button" id="save" value="Внести в корзину" />
+    <input type="submit" name="save" id="save" value="Просмотр покупки"/>
+
 </form>
 <form action="/Home/Array" method="post">
     <input id="names" name="names" type="text" value="" />
@@ -45,7 +45,7 @@
 </ul>
 @section Scripts {
    <script>
-       window.onload = init;
+        window.onload=init;
        
        function init() {
            var button = document.getElementById("save");
@@ -58,11 +58,21 @@
                }
            }
        }
-       function createInfo() {
-           var value = document.getElementById("Name").value;
-           var key = "sticky_" + sessionStorage.length;
-           sessionStorage.setItem(key, value);
-           addInfo(value)
+       function createInfo() {;
+           var value = "@foreach (var item in Model) {@item.Name@item.Color}";
+           if (value == " ") {
+               alert("Для ввода данных нажмите на кнопку еще раз!");
+               
+
+               button.value = "Нажмите еще раз";
+           }
+           else {
+               var key = "sticky_" + sessionStorage.length;
+               sessionStorage.setItem(key, value);
+               addInfo(value)
+               var button = document.getElementById("save");
+               button.value = "Просмотреть покупку";
+           }
        }
        function addInfo(value) {
            var stickies = document.getElementById("stickies");
@@ -72,6 +82,8 @@
            span.innerHTML = value;
            sticky.appendChild(span);
            stickies.appendChild(sticky);
+           var hr = document.createElement("hr");
+           stickies.appendChild(hr);
        }
     </script>
     }
